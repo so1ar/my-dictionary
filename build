@@ -1,0 +1,19 @@
+#!/bin/bash
+
+mkdir cache
+
+cd scel
+
+for file in $(ls *.scel)
+do
+	../scel.py ${file} ../cache/${file}.txt;
+done
+
+cd ..
+
+cat cache/*.txt > cache/output
+sort cache/output -o cache/output
+uniq cache/output > cache/output2
+cat demo.txt cache/output2 > custom.dict.yaml
+
+rm -rf cache
