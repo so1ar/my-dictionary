@@ -29,9 +29,9 @@ jobs:
       
       - name: set up
         run: |
-          apt update
-          apt upgrade -y
-          apt install libime wget
+          sudo apt update
+          sudo apt upgrade -y
+          sudo apt install libime wget
           
       # Runs a set of commands using the runners shell
       - name: build
