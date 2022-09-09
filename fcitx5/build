@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# 转换custom.dict.yaml
+echo "转换custom.dict.yaml"
+rm -f custom.*
+cp ../custom.dict.yaml custom.txt
+sed -i '1,5d' custom.txt
+sed -i "s/ /'/g" custom.txt
+sed -i "s/	/ /g" custom.txt
+sed -i "s/lue/lve/g" custom.txt
+sed -i "s/nue/nve/g" custom.txt
+
+# 获取搜狗网络词库
+
+echo "获取搜狗网络词库"
+rm -f sogou.*
+../scel.py > sogou.txt
+sed -i '1,5d' sogou.txt
+sed -i "s/ /'/g" sogou.txt
+sed -i "s/	/ /g" sogou.txt
+sed -i "s/lue/lve/g" sogou.txt
+sed -i "s/nue/nve/g" sogou.txt
+
+# 获取moegirl的最新版本
+rm -f moegirl.*
+wget https://raw.githubusercontent.com/archlinuxcn/repo/master/archlinuxcn/fcitx5-pinyin-moegirl/PKGBUILD -O moegirl.tmp
+moegirl_ver="`cat moegirl.tmp | grep pkgver= | cut -d "=" -f 2`"
+echo "正在下载moegirl ${moegirl_ver}"
+wget https://github.com/outloudvi/mw2fcitx/releases/download/${moegirl_ver}/moegirl.dict
+echo "正在转换moegirl.dict"
+libime_pinyindict -d moegirl.dict moegirl.txt
+sed -i "s/0/1/g" moegirl.txt
+
+# 获取zhwiki的最新版本
+rm -f zhwiki.*
+wget https://raw.githubusercontent.com/archlinux/svntogit-community/packages/fcitx5-pinyin-zhwiki/trunk/PKGBUILD -O zhwiki.tmp
+zhwiki_converterver="`cat zhwiki.tmp | grep _converterver= | cut -d "=" -f 2`"
+zhwiki_webslangver="`cat zhwiki.tmp | grep _webslangver= | cut -d "=" -f 2`"
+echo "正在下载zhwiki ${zhwiki_converterver}-${zhwiki_webslangver}"
+wget https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/download/${zhwiki_converterver}/zhwiki-${zhwiki_webslangver}.dict -O zhwiki.dict
+echo "正在转换zhwiki.dict"
+libime_pinyindict -d zhwiki.dict zhwiki.txt
+sed -i "s/0/1/g" zhwiki.txt
+
+# 获取CustomPinyinDictionary的最新版本
+rm -f CustomPinyinDictionary*
+wget https://raw.githubusercontent.com/wuhgit/CustomPinyinDictionary/main/magisk/update.json -O CustomPinyinDictionary.tmp
+CustomPinyinDictionary_ver="`cat CustomPinyinDictionary.tmp | grep versionCode | cut -d " " -f 6 | cut -d ',' -f 1`"
+echo "正在下载CustomPinyinDictionary ${CustomPinyinDictionary_ver}"
+wget https://github.com/wuhgit/CustomPinyinDictionary/releases/download/assets/CustomPinyinDictionary_Fcitx_${CustomPinyinDictionary_ver}.tar.gz -O CustomPinyinDictionary.tar.gz
+echo "正在转换CustomPinyinDictionary.dict"
+tar -xzvf CustomPinyinDictionary.tar.gz
+libime_pinyindict -d CustomPinyinDictionary_Fcitx.dict CustomPinyinDictionary.txt
+sed -i "s/0/1/g" CustomPinyinDictionary.txt
+
+# 合并
+echo "正在合并"
+rm -f my-dict.*
+cat *.txt > my-dict.tmp
+sort my-dict.tmp -o my-dict.tmp
+uniq my-dict.tmp > my-dict.raw
+sed -i '/薄雾浓云愁水昼/d' my-dict.raw
+libime_pinyindict my-dict.raw my-dict.dict
