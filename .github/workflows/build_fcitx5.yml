@@ -48,6 +48,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./my-dict.dict
+            ./fcitx5/my-dict.dict
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
