@@ -29,7 +29,7 @@ jobs:
       
       - name: set up
         run: |
-          TAG_NAME=$(date +%Y%m%d%H%M)
+          echo "RELEASE_NAME=$(date +%Y%m%d)" >> $GITHUB_ENV
           sudo apt update
           sudo apt upgrade -y
           sudo apt install wget libime-bin -y
@@ -43,8 +43,8 @@ jobs:
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.6
         with:
-          name: ${{ env.TAG_NAME }}
-          tag_name: ${{ env.TAG_NAME }}
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.RELEASE_NAME }}
           draft: false
           prerelease: false
           files: |
