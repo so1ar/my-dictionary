@@ -31,7 +31,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt upgrade -y
-          sudo apt install libime wget
+          sudo apt install wget fcitx5 fcitx5-chinese-addons -y
           
       # Runs a set of commands using the runners shell
       - name: build
