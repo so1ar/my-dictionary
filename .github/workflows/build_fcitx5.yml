@@ -31,7 +31,6 @@ jobs:
         run: |
           echo "RELEASE_NAME=$(date +%Y%m%d)" >> $GITHUB_ENV
           sudo apt update
-          sudo apt upgrade -y
           sudo apt install wget libime-bin -y
           
       # Runs a set of commands using the runners shell
