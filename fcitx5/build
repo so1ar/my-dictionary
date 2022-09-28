@@ -43,15 +43,15 @@ libime_pinyindict -d zhwiki.dict zhwiki.txt
 sed -i "s/0/1/g" zhwiki.txt
 
 # 获取CustomPinyinDictionary的最新版本
-rm -f CustomPinyinDictionary*
-wget https://raw.githubusercontent.com/wuhgit/CustomPinyinDictionary/main/magisk/update.json -O CustomPinyinDictionary.tmp
-CustomPinyinDictionary_ver="`cat CustomPinyinDictionary.tmp | grep versionCode | cut -d " " -f 6 | cut -d ',' -f 1`"
-echo "正在下载CustomPinyinDictionary ${CustomPinyinDictionary_ver}"
-wget https://github.com/wuhgit/CustomPinyinDictionary/releases/download/assets/CustomPinyinDictionary_Fcitx_${CustomPinyinDictionary_ver}.tar.gz -O CustomPinyinDictionary.tar.gz
-echo "正在转换CustomPinyinDictionary.dict"
-tar -xzvf CustomPinyinDictionary.tar.gz
-libime_pinyindict -d CustomPinyinDictionary_Fcitx.dict CustomPinyinDictionary.txt
-sed -i "s/0/1/g" CustomPinyinDictionary.txt
+#rm -f CustomPinyinDictionary*
+#wget https://raw.githubusercontent.com/wuhgit/CustomPinyinDictionary/main/magisk/update.json -O CustomPinyinDictionary.tmp
+#CustomPinyinDictionary_ver="`cat CustomPinyinDictionary.tmp | grep versionCode | cut -d " " -f 6 | cut -d ',' -f 1`"
+#echo "正在下载CustomPinyinDictionary ${CustomPinyinDictionary_ver}"
+#wget https://github.com/wuhgit/CustomPinyinDictionary/releases/download/assets/CustomPinyinDictionary_Fcitx_${CustomPinyinDictionary_ver}.tar.gz -O CustomPinyinDictionary.tar.gz
+#echo "正在转换CustomPinyinDictionary.dict"
+#tar -xzvf CustomPinyinDictionary.tar.gz
+#libime_pinyindict -d CustomPinyinDictionary_Fcitx.dict CustomPinyinDictionary.txt
+#sed -i "s/0/1/g" CustomPinyinDictionary.txt
 
 # 合并
 echo "正在合并"
