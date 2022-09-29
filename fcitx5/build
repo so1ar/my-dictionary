@@ -15,7 +15,6 @@ sed -i "s/nue/nve/g" custom.txt
 echo "获取搜狗网络词库"
 rm -f sogou.*
 ../scel.py > sogou.txt
-sed -i '1,5d' sogou.txt
 sed -i "s/ /'/g" sogou.txt
 sed -i "s/	/ /g" sogou.txt
 sed -i "s/lue/lve/g" sogou.txt
