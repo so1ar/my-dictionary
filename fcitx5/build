@@ -54,6 +54,21 @@ tar -xzvf CustomPinyinDictionary.tar.gz
 libime_pinyindict -d CustomPinyinDictionary_Fcitx.dict CustomPinyinDictionary.txt
 #sed -i "s/0/1/g" CustomPinyinDictionary.txt
 
+# 获取cedict
+rm -rf fcitx5_dicts
+rm -f cedict*
+git clone https://github.com/cathaysia/fcitx5_dicts
+cd fcitx5_dicts/extern
+rm -f cedict_ts.u8
+wget https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.zip
+unzip cedict_1_0_ts_utf-8_mdbg.zip
+cd ..
+python3 main.py
+cp dict/cedict.dict ../
+cd ..
+libime_pinyindict -d cedict.dict cedict.txt
+sed -i "s/0.5/0/g" cedict.txt
+
 # 合并
 echo "正在合并"
 rm -f my-dict.*
