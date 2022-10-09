@@ -9,6 +9,7 @@ sed -i "s/ /'/g" custom.txt
 sed -i "s/	/ /g" custom.txt
 sed -i "s/lue/lve/g" custom.txt
 sed -i "s/nue/nve/g" custom.txt
+sed -i "s/1/0/g" custom.txt
 
 # 获取搜狗网络词库
 
@@ -19,6 +20,7 @@ sed -i "s/ /'/g" sogou.txt
 sed -i "s/	/ /g" sogou.txt
 sed -i "s/lue/lve/g" sogou.txt
 sed -i "s/nue/nve/g" sogou.txt
+sed -i "s/1/0/g" sogou.txt
 
 # 获取moegirl的最新版本
 rm -f moegirl.*
@@ -28,7 +30,7 @@ echo "正在下载moegirl ${moegirl_ver}"
 wget https://github.com/outloudvi/mw2fcitx/releases/download/${moegirl_ver}/moegirl.dict
 echo "正在转换moegirl.dict"
 libime_pinyindict -d moegirl.dict moegirl.txt
-sed -i "s/0/1/g" moegirl.txt
+#sed -i "s/0/1/g" moegirl.txt
 
 # 获取zhwiki的最新版本
 #rm -f zhwiki.*
@@ -50,13 +52,14 @@ wget https://github.com/wuhgit/CustomPinyinDictionary/releases/download/assets/C
 echo "正在转换CustomPinyinDictionary.dict"
 tar -xzvf CustomPinyinDictionary.tar.gz
 libime_pinyindict -d CustomPinyinDictionary_Fcitx.dict CustomPinyinDictionary.txt
-sed -i "s/0/1/g" CustomPinyinDictionary.txt
+#sed -i "s/0/1/g" CustomPinyinDictionary.txt
 
 # 合并
 echo "正在合并"
 rm -f my-dict.*
-cat *.txt > my-dict.tmp
-sort my-dict.tmp -o my-dict.tmp
-uniq my-dict.tmp > my-dict.raw
-sed -i '/薄雾浓云愁水昼/d' my-dict.raw
-libime_pinyindict my-dict.raw my-dict.dict
+cat *.txt > my-dict.raw
+sort my-dict.raw -o my-dict.raw
+uniq my-dict.raw > my-dict.txt
+sed -i '/薄雾浓云愁水昼/d' my-dict.txt
+wc -l my-dict.txt > total_number
+libime_pinyindict my-dict.txt my-dict.dict

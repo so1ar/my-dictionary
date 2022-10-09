@@ -40,8 +40,9 @@ jobs:
           ./build
       
       - name: Release and upload assets
-        uses: softprops/action-gh-release@v0.1.6
+        uses: softprops/action-gh-release@v0.1.14
         with:
+          body_path: ./fcitx5/total_number
           name: ${{ env.RELEASE_NAME }}
           tag_name: ${{ env.RELEASE_NAME }}
           draft: false
