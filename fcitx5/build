@@ -76,5 +76,6 @@ cat *.txt > my-dict.raw
 sort my-dict.raw -o my-dict.raw
 uniq my-dict.raw > my-dict.txt
 sed -i '/薄雾浓云愁水昼/d' my-dict.txt
-wc -l my-dict.txt > total_number
+total_number="`wc -l build | cut -d " " -f 1`"
+echo "总词条数 ${total_number}" > total_number
 libime_pinyindict my-dict.txt my-dict.dict
